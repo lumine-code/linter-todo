@@ -1,6 +1,8 @@
 # linter-todo
 
-Scans files for TODO-style keywords and reports them as info-level linter messages. Uses the same default keywords as the built-in `language-todo` package.
+Report TODO-style keywords as linter messages.
+
+Messages are reported at info level, using the same default keywords as the built-in `language-todo` package.
 
 ## Features
 

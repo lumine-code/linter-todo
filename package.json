@@ -1,7 +1,7 @@
 {
   "name": "linter-todo",
   "author": "lumine-code",
-  "description": "Scans files for TODO-style keywords and reports them as linter messages",
+  "description": "Report TODO-style keywords as linter messages.",
   "repository": "https://github.com/lumine-code/linter-todo",
   "bugs": {
     "url": "https://github.com/lumine-code/linter-todo/issues"
