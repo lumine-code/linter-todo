@@ -8,7 +8,7 @@ Messages are reported at info level, using the same default keywords as the buil
 
 - **Editor scan**: reports TODO-style keywords in open editors as info-level linter messages.
 - **Project scan**: scans whole projects or tree-view selections in a background task and reports results through the indie linter API.
-- **Notebook support**: scans regular source files and Jupyter notebooks (`.ipynb`); in notebook mode each code cell is scanned individually and messages are mapped to the correct cell via [jove-view](https://github.com/lumine-code/jove-view).
+- **Notebook support**: scans regular source files and Jupyter notebooks (`.ipynb`); in notebook mode each code cell is scanned individually and messages are mapped to the correct cell via [jupyter-view](https://github.com/lumine-code/jupyter-view).
 - **Comment detection**: restricts matches to comment regions only, consistent with the built-in `language-todo` package.
 - **Configurable keywords**: the list of detected keywords can be adjusted in the package settings.
 - **VCS awareness**: project scans respect `core.ignoredNames`, the linter ignore glob and VCS-ignored paths.
