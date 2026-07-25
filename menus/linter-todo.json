@@ -1,0 +1,17 @@
+{
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "Linter Todo",
+          "submenu": [
+            { "label": "Toggle State", "command": "linter-todo:toggle-state" },
+            { "label": "Lint Projects", "command": "linter-todo:lint-projects" },
+            { "label": "Lint Selected", "command": "linter-todo:lint-selected" }
+          ]
+        }
+      ]
+    }
+  ]
+}

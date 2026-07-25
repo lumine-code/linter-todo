@@ -1,7 +1,11 @@
 {
   "name": "linter-todo",
+  "author": "lumine-code",
   "description": "Scans files for TODO-style keywords and reports them as linter messages",
-  "repository": "https://github.com/asiloisad/pulsar-linter-todo",
+  "repository": "https://github.com/lumine-code/linter-todo",
+  "bugs": {
+    "url": "https://github.com/lumine-code/linter-todo/issues"
+  },
   "keywords": [
     "linter",
     "todo",
@@ -11,12 +15,18 @@
     "review",
     "bug"
   ],
-  "version": "1.4.1",
+  "version": "2.0.0",
   "license": "MIT",
   "engines": {
     "atom": ">=1.100.0 <2.0.0"
   },
   "main": "./lib/main",
+  "scripts": {
+    "test": "cd ../lumine && npm run test:only -- ../linter-todo/spec",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
   "activationHooks": [
     "core:loaded-shell-environment"
   ],
@@ -54,14 +64,12 @@
   "linter-package": true,
   "configSchema": {
     "state": {
-      "order": 1,
       "title": "Linter state",
       "description": "Enable or disable the service of linter.",
       "type": "boolean",
       "default": true
     },
     "keywords": {
-      "order": 2,
       "title": "Keywords",
       "description": "List of TODO-style keywords to detect.",
       "type": "array",
@@ -90,5 +98,13 @@
   },
   "dependencies": {
     "minimatch": "^10.2.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.8.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-n": "^18.2.2",
+    "globals": "^17.7.0",
+    "prettier": "^3.9.6"
   }
 }
