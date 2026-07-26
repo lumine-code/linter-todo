@@ -40,7 +40,7 @@ Both scan modes restrict matches to comment regions only.
 - **linter.provider** (`1.0.0`): provided to the linter package; exposes the TODO file linter with its name, grammar scopes and `lint` function.
 - **linter.registry** (`^1.0.0`): consumed to report project-wide scan results through an indie linter delegate.
 - **busy-signal.reporter** (`^1.0.0`): consumed to show a busy message while project scans are running.
-- **tree-view** (`^1.0.0`): consumed to resolve the selected files or folders for `linter-todo:lint-selected`.
+- **tree-view.selection** (`^1.0.0`): consumed to resolve the selected files or folders for `linter-todo:lint-selected`.
 
 ## Contributing
 
