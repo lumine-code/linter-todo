@@ -95,7 +95,7 @@
     }
   },
   "dependencies": {
-    "minimatch": "^10.2.5"
+    "picomatch": "^4.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
