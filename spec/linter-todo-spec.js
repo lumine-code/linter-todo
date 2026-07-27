@@ -36,7 +36,7 @@ describe("linter-todo", () => {
 
       expect(messages.length).toBe(2);
 
-      expect(messages[0].severity).toBe("info");
+      expect(messages[0].severity).toBe("hint");
       expect(messages[0].excerpt).toBe("TODO: implement feature");
       expect(messages[0].location.file).toBe(editor.getPath());
       expect(messages[0].location.position).toEqual([
@@ -56,6 +56,14 @@ describe("linter-todo", () => {
       const messages = mainModule.provideLinter().lint(editor);
       expect(messages.length).toBe(1);
       expect(messages[0].excerpt).toContain("FIXME");
+    });
+
+    it("honors the configured severity", () => {
+      atom.config.set("linter-todo.severity", "warning");
+      const messages = mainModule.provideLinter().lint(editor);
+
+      expect(messages.length).toBe(2);
+      expect(messages.map((message) => message.severity)).toEqual(["warning", "warning"]);
     });
 
     it("returns an empty list when the linter state is disabled", () => {

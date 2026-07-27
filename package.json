@@ -13,7 +13,7 @@
     "review",
     "bug"
   ],
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "engines": {
     "atom": ">=1.100.0 <2.0.0"
@@ -72,6 +72,18 @@
       "description": "Skip files your VCS ignores when scanning a project. Turn this off to scan ignored files such as build output or vendored code.",
       "type": "boolean",
       "default": true
+    },
+    "severity": {
+      "title": "Severity",
+      "description": "Severity reported for every match. Hint is the quiet tier: no gutter dot and no status-bar tile until something is found.",
+      "type": "string",
+      "enum": [
+        "error",
+        "warning",
+        "info",
+        "hint"
+      ],
+      "default": "hint"
     },
     "keywords": {
       "title": "Keywords",
