@@ -20,7 +20,7 @@
   },
   "main": "./lib/main",
   "scripts": {
-    "test": "cd ../lumine && npm run test:only -- ../linter-todo/spec",
+    "test": "cd ../../lumine && npm run test:only -- ../pkg_lumine/linter-todo/spec",
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
@@ -64,6 +64,12 @@
     "state": {
       "title": "Linter state",
       "description": "Enable or disable the service of linter.",
+      "type": "boolean",
+      "default": true
+    },
+    "excludeVcsIgnoredPaths": {
+      "title": "Exclude VCS ignored paths",
+      "description": "Skip files your VCS ignores when scanning a project. Turn this off to scan ignored files such as build output or vendored code.",
       "type": "boolean",
       "default": true
     },
