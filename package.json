@@ -18,6 +18,9 @@
   "engines": {
     "atom": ">=1.100.0 <2.0.0"
   },
+  "backgroundTips": [
+    "Your TODO and FIXME comments are reported as linter messages, so they are easy to find again."
+  ],
   "main": "./lib/main",
   "scripts": {
     "test": "lumine --test spec",
