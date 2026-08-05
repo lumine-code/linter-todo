@@ -22,6 +22,11 @@
     "Your TODO and FIXME comments are reported as linter messages, so they are easy to find again."
   ],
   "main": "./lib/main",
+  "files": [
+    "lib",
+    "menus",
+    "spec"
+  ],
   "scripts": {
     "test": "lumine --test spec",
     "lint": "eslint . --max-warnings 0",
