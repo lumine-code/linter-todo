@@ -4,12 +4,12 @@ describe("linter-todo", () => {
   let mainModule, workspaceElement;
 
   beforeEach(async () => {
-    workspaceElement = atom.views.getView(atom.workspace);
+    workspaceElement = lumine.views.getView(lumine.workspace);
     jasmine.attachToDOM(workspaceElement);
 
     // The package defers activation until one of its commands is dispatched.
-    const activation = atom.packages.activatePackage("linter-todo");
-    atom.commands.dispatch(workspaceElement, "linter-todo:lint-projects");
+    const activation = lumine.packages.activatePackage("linter-todo");
+    lumine.commands.dispatch(workspaceElement, "linter-todo:lint-projects");
     mainModule = (await activation).mainModule;
   });
 
@@ -28,7 +28,7 @@ describe("linter-todo", () => {
     let editor;
 
     beforeEach(async () => {
-      editor = await atom.workspace.open(path.join(__dirname, "fixtures", "sample.js"));
+      editor = await lumine.workspace.open(path.join(__dirname, "fixtures", "sample.js"));
     });
 
     it("reports keywords found in comments and skips code occurrences", () => {
@@ -52,14 +52,14 @@ describe("linter-todo", () => {
     });
 
     it("honors the configured keyword list", () => {
-      atom.config.set("linter-todo.keywords", ["FIXME"]);
+      lumine.config.set("linter-todo.keywords", ["FIXME"]);
       const messages = mainModule.provideLinter().lint(editor);
       expect(messages.length).toBe(1);
       expect(messages[0].excerpt).toContain("FIXME");
     });
 
     it("honors the configured severity", () => {
-      atom.config.set("linter-todo.severity", "warning");
+      lumine.config.set("linter-todo.severity", "warning");
       const messages = mainModule.provideLinter().lint(editor);
 
       expect(messages.length).toBe(2);
@@ -67,12 +67,12 @@ describe("linter-todo", () => {
     });
 
     it("returns an empty list when the linter state is disabled", () => {
-      atom.config.set("linter-todo.state", false);
+      lumine.config.set("linter-todo.state", false);
       expect(mainModule.provideLinter().lint(editor)).toEqual([]);
     });
 
     it("returns an empty list when no keywords are configured", () => {
-      atom.config.set("linter-todo.keywords", []);
+      lumine.config.set("linter-todo.keywords", []);
       expect(mainModule.provideLinter().lint(editor)).toEqual([]);
     });
   });
@@ -108,11 +108,11 @@ describe("linter-todo", () => {
 
   describe("commands", () => {
     it("toggles the linter state", () => {
-      expect(atom.config.get("linter-todo.state")).toBe(true);
-      atom.commands.dispatch(workspaceElement, "linter-todo:toggle-state");
-      expect(atom.config.get("linter-todo.state")).toBe(false);
-      atom.commands.dispatch(workspaceElement, "linter-todo:toggle-state");
-      expect(atom.config.get("linter-todo.state")).toBe(true);
+      expect(lumine.config.get("linter-todo.state")).toBe(true);
+      lumine.commands.dispatch(workspaceElement, "linter-todo:toggle-state");
+      expect(lumine.config.get("linter-todo.state")).toBe(false);
+      lumine.commands.dispatch(workspaceElement, "linter-todo:toggle-state");
+      expect(lumine.config.get("linter-todo.state")).toBe(true);
     });
   });
 });

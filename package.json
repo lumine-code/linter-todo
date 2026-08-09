@@ -37,7 +37,7 @@
     "core:loaded-shell-environment"
   ],
   "activationCommands": {
-    "atom-workspace": [
+    "lumine-workspace": [
       "linter-todo:toggle-state",
       "linter-todo:lint-projects",
       "linter-todo:lint-selected"

@@ -20,7 +20,7 @@ To install `linter-todo` search for _linter-todo_ in the Install pane of the Lum
 
 ## Commands
 
-Commands available in `atom-workspace`:
+Commands available in `lumine-workspace`:
 
 - `linter-todo:toggle-state`: toggle config of linter state,
 - `linter-todo:lint-projects`: scan entire project for TODO keywords,

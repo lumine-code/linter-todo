@@ -32,7 +32,7 @@ describe("linter-todo file collection", () => {
 
   beforeEach(() => {
     dir = buildFixture();
-    atom.config.set("linter-todo.excludeVcsIgnoredPaths", true);
+    lumine.config.set("linter-todo.excludeVcsIgnoredPaths", true);
   });
 
   it("collects the scannable files under a directory", async () => {
@@ -55,7 +55,7 @@ describe("linter-todo file collection", () => {
   });
 
   it("includes VCS-ignored files when the setting is off", async () => {
-    atom.config.set("linter-todo.excludeVcsIgnoredPaths", false);
+    lumine.config.set("linter-todo.excludeVcsIgnoredPaths", false);
     const files = relativize(dir, await linter.collectFiles([dir], [], null));
 
     expect(files.has("build/bundle.js")).toBe(true);

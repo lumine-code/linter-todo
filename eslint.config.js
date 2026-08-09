@@ -5,7 +5,7 @@ const prettier = require("eslint-config-prettier");
 
 // Modules provided by the Lumine/Electron runtime rather than this package's own
 // manifest, so they aren't resolvable by eslint-plugin-n.
-const runtimeModules = ["atom"];
+const runtimeModules = ["lumine"];
 
 module.exports = [
   // Fixture files intentionally contain unused code for the specs to scan.
@@ -24,7 +24,7 @@ module.exports = [
       globals: {
         ...globals.browser,
         ...globals.node,
-        atom: "readonly",
+        lumine: "readonly",
       },
     },
     rules: {
