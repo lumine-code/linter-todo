@@ -77,6 +77,57 @@ describe("linter-todo", () => {
     });
   });
 
+  describe("notebook source editors", () => {
+    const notebookPath = path.join(__dirname, "fixtures", "sample.ipynb");
+
+    // What jupyter-view registers with the linter: the shared source editor
+    // marked as such, with the notebook views reachable behind it.
+    function fakeSourceEditor(cells) {
+      const notebookEditor = {
+        document: { cells },
+        getPath: () => notebookPath,
+      };
+      return {
+        isJupyterNotebookSourceEditor: true,
+        getJupyterNotebookEditors: () => [notebookEditor],
+      };
+    }
+
+    it("scans the cells instead of the JSON projection", () => {
+      const sourceEditor = fakeSourceEditor([
+        { type: "markdown", source: "TODO in prose stays out of it" },
+        { type: "code", source: "x = 1\n# TODO: fix the kernel\n" },
+      ]);
+
+      const messages = mainModule.provideLinter().lint(sourceEditor);
+
+      expect(messages.length).toBe(1);
+      expect(messages[0].excerpt).toBe("TODO: fix the kernel");
+      expect(messages[0].location.file).toBe(notebookPath);
+      // 1-based cell and cell-relative rows: jupyter-view resolves the cell
+      // buffers from these, so the message itself names no buffer.
+      expect(messages[0].location.cell).toBe(2);
+      expect(messages[0].location.position).toEqual([
+        [1, 2],
+        [1, 6],
+      ]);
+      expect("buffer" in messages[0].location).toBe(false);
+    });
+
+    it("requires the keyword to sit in a comment within the cell", () => {
+      const sourceEditor = fakeSourceEditor([{ type: "code", source: "TODO = 1\nprint(TODO)\n" }]);
+      expect(mainModule.provideLinter().lint(sourceEditor)).toEqual([]);
+    });
+
+    it("reports nothing while no notebook view is attached", () => {
+      const sourceEditor = {
+        isJupyterNotebookSourceEditor: true,
+        getJupyterNotebookEditors: () => [],
+      };
+      expect(mainModule.provideLinter().lint(sourceEditor)).toEqual([]);
+    });
+  });
+
   describe("comment regions", () => {
     const { buildCommentRegions, isInComment } = require("../lib/comment-regions");
 
