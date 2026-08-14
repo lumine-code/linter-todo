@@ -16,7 +16,7 @@ Messages are reported at hint level by default, using the same default keywords 
 
 ## Installation
 
-To install `linter-todo` search for _linter-todo_ in the Install pane of the Lumine settings or run `lumine --install lumine-code/linter-todo`.
+To install `linter-todo` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/linter-todo`.
 
 ## Commands
 
@@ -38,10 +38,10 @@ Both scan modes restrict matches to comment regions only.
 
 ## Services
 
-- **linter.provider** (`1.0.0`): provided to the linter package; exposes the TODO file linter with its name, grammar scopes and `lint` function.
-- **linter.registry** (`^1.0.0`): consumed to report project-wide scan results through an indie linter delegate.
-- **busy-signal** (`^1.0.0`): consumed to show a busy message while project scans are running.
-- **tree-view.selection** (`^1.0.0`): consumed to resolve the selected files or folders for `linter-todo:lint-selected`.
+- `linter.provider`: provided to the linter package; exposes the TODO file linter with its name, grammar scopes and `lint` function.
+- `linter.registry`: consumed to report project-wide scan results through an indie linter delegate.
+- `busy-signal`: consumed to show a busy message while project scans are running.
+- `tree-view.selection`: consumed to resolve the selected files or folders for `linter-todo:lint-selected`.
 
 ## Contributing
 
