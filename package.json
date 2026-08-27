@@ -81,6 +81,15 @@
       "type": "boolean",
       "default": true
     },
+    "ignoredNames": {
+      "title": "Ignored Names",
+      "description": "Additional glob patterns skipped when scanning project directories.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
     "severity": {
       "title": "Severity",
       "description": "Severity reported for every match. Hint is the quiet tier: no gutter dot and no status-bar tile until something is found.",

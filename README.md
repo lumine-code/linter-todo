@@ -12,7 +12,7 @@ Messages are reported at hint level by default, using the same default keywords 
 - **Comment detection**: restricts matches to comment regions only, consistent with the built-in `language-todo` package.
 - **Configurable keywords**: the list of detected keywords can be adjusted in the package settings.
 - **Configurable severity**: matches are reported as hints, and any other severity can be selected in the package settings.
-- **VCS awareness**: project scans respect `core.ignoredNames`, the linter ignore glob and VCS-ignored paths.
+- **Ignore awareness**: project scans respect the editor's and package's ignored names, the linter ignore glob and the package's VCS policy.
 
 ## Installation
 
