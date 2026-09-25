@@ -18,9 +18,6 @@
   "engines": {
     "lumine": "^1.0.0"
   },
-  "backgroundTips": [
-    "Your TODO and FIXME comments are reported as linter messages, so they are easy to find again."
-  ],
   "main": "./lib/main",
   "files": [
     "lib",
@@ -32,6 +29,18 @@
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
+  },
+  "providedServices": {
+    "linter.provider": {
+      "versions": {
+        "1.0.0": "provideLinter"
+      }
+    },
+    "background-tips.provider": {
+      "versions": {
+        "1.0.0": "provideBackgroundTips"
+      }
+    }
   },
   "consumedServices": {
     "linter.registry": {
@@ -47,13 +56,6 @@
     "tree-view.selection": {
       "versions": {
         "^1.0.0": "consumeTreeViewSelection"
-      }
-    }
-  },
-  "providedServices": {
-    "linter.provider": {
-      "versions": {
-        "1.0.0": "provideLinter"
       }
     }
   },
