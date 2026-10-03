@@ -51,9 +51,11 @@ describe("linter-todo", () => {
     });
 
     it("reports keywords found in comments and skips code occurrences", () => {
+      spyOn(editor.getBuffer(), "getLines").and.callThrough();
       const messages = mainModule.provideLinter().lint(editor);
 
       expect(messages.length).toBe(2);
+      expect(editor.getBuffer().getLines).toHaveBeenCalledTimes(1);
 
       expect(messages[0].severity).toBe("hint");
       expect(messages[0].excerpt).toBe("TODO: implement feature");
@@ -68,6 +70,30 @@ describe("linter-todo", () => {
         [1, 16],
         [1, 21],
       ]);
+    });
+
+    it("skips the full comment map when a CADINP buffer contains no keywords", () => {
+      spyOn(editor, "getPath").and.returnValue(path.join(__dirname, "fixtures", "sample.dat"));
+      editor.setText("node 1 x 0 y 0 z 0\nend\n");
+      spyOn(editor.getBuffer(), "getLines").and.throwError("Unexpected full comment scan");
+
+      expect(mainModule.provideLinter().lint(editor)).toEqual([]);
+      expect(editor.getBuffer().getLines).not.toHaveBeenCalled();
+    });
+
+    it("classifies CADINP matches using one comment map, including a first match in code", () => {
+      spyOn(editor, "getPath").and.returnValue(path.join(__dirname, "fixtures", "sample.dat"));
+      editor.setText("TODO = 1\n$ TODO: mesh\n\n! FIXME: loads\n\n// NOTE: check\n");
+      spyOn(editor.getBuffer(), "getLines").and.callThrough();
+
+      const messages = mainModule.provideLinter().lint(editor);
+
+      expect(messages.map((message) => message.excerpt)).toEqual([
+        "TODO: mesh, `$`",
+        "FIXME: loads",
+        "NOTE: check",
+      ]);
+      expect(editor.getBuffer().getLines).toHaveBeenCalledTimes(1);
     });
 
     it("honors the configured keyword list", () => {
