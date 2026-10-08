@@ -43,6 +43,8 @@ Both scan modes restrict matches to comment regions only.
 - `busy-signal`: consumed to show a busy message while project scans are running.
 - `tree-view.selection`: consumed to resolve the selected files or folders for `linter-todo:lint-selected`.
 
+The most recently registered active tree selection provider supplies selected paths. Withdrawing it restores the preceding active registration; withdrawing one registration of a shared provider keeps its other registrations usable. The package releases its registrations without disposing the provider itself.
+
 ## Contributing
 
 Got ideas to make this package better, found a bug, or want to help add new features? Just drop your thoughts on GitHub. Any feedback is welcome!
