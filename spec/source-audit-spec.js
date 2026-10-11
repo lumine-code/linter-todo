@@ -2,7 +2,6 @@ const fs = require("node:fs");
 const os = require("node:os");
 const path = require("node:path");
 const timers = require("node:timers");
-const { spawnSync } = require("node:child_process");
 
 describe("TODO scan failure and keyword boundaries", () => {
   let main, indie, directory, file, leases, delegate;
@@ -43,36 +42,13 @@ describe("TODO scan failure and keyword boundaries", () => {
       });
     });
   }
-  it("ignores an empty keyword while the production scanner still finds a configured TODO", () => {
+  it("ignores an empty keyword while the production scanner still finds a configured TODO", async () => {
     lumine.config.set("linter-todo.keywords", ["", "TODO"]);
-    const script = `
-      let result;
-      global.emit = (name, value) => { if(name === "linter-todo:project-scan") result = value; };
-      const complete = () => {
-        if(result?.messages.length !== 1 || result.messages[0].excerpt !== "TODO: owned meaningful message") process.exit(1);
-        process.stdout.write("completed scanner result");
-      };
-      require(process.argv[1]).call({async:()=>complete}, JSON.parse(process.argv[2]),process.argv[3],"g","hint");
-    `;
-    const result = spawnSync(
-      process.execPath,
-      [
-        "-e",
-        script,
-        path.join(__dirname, "../lib/scanner.js"),
-        JSON.stringify([{ projectPath: directory, files: [file] }]),
-        main.regex.source,
-      ],
-      {
-        encoding: "utf8",
-        windowsHide: true,
-        timeout: 2500,
-        env: { ...process.env, ELECTRON_RUN_AS_NODE: "1" },
-      },
-    );
-    expect(result.error).withContext(result.error?.message).toBeUndefined();
-    expect(result.status).withContext(result.stderr).toBe(0);
-    expect(result.stdout).toContain("completed scanner result");
+    await indie.runScan([{ projectPath: directory, targetPaths: [file] }]);
+    expect(await resultWithinDeadline()).toBe(true);
+    const [messages] = delegate.setAllMessages.calls.mostRecent().args;
+    expect(messages.length).toBe(1);
+    expect(messages[0].excerpt).toBe("TODO: owned meaningful message");
   });
   it("releases scan and busy ownership after an actual crawl rejection and allows retry", async () => {
     const disposed = jasmine.createSpy("owned busy disposal");
