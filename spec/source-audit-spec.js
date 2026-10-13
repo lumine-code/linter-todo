@@ -29,7 +29,13 @@ describe("TODO scan failure and keyword boundaries", () => {
     const relative = path.relative(fs.realpathSync(os.tmpdir()), directory);
     if (!relative || relative.startsWith("..") || path.isAbsolute(relative))
       throw new Error("Unsafe owned TODO cleanup");
-    fs.rmSync(directory, { recursive: true, force: true });
+    // Windows can briefly retain a released editor or watcher handle.
+    await fs.promises.rm(directory, {
+      recursive: true,
+      force: true,
+      maxRetries: 10,
+      retryDelay: 100,
+    });
   });
   async function resultWithinDeadline() {
     if (delegate.setAllMessages.calls.count()) return true;
