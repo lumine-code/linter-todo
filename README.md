@@ -14,6 +14,8 @@ Messages are reported at hint level by default, using the same default keywords 
 - **Configurable severity**: matches are reported as hints, and any other severity can be selected in the package settings.
 - **Ignore awareness**: project scans respect the editor's and package's ignored names, the linter ignore glob and the package's VCS policy.
 
+![Collect TODO and FIXME annotations as navigable diagnostics.](.github/demo.png)
+
 ## Installation
 
 To install `linter-todo` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/linter-todo`.

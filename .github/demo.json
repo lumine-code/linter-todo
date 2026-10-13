@@ -1,0 +1,17 @@
+{
+  "title": "linter-todo",
+  "description": "Collect TODO and FIXME annotations as navigable diagnostics.",
+  "recordedOn": "2026-10-13",
+  "sourceRevision": "5e658ed86201c7fcd1f610de4207633d3921cddc",
+  "mode": "normal",
+  "fontSettings": "default",
+  "themeSourceRevision": "6564a9e21899b5541e9c8f8006f9be6d6d72e6ad",
+  "images": [
+    {
+      "file": "demo.png",
+      "label": "Collect TODO and FIXME annotations as navigable diagnostics.",
+      "width": 1100,
+      "height": 530
+    }
+  ]
+}
