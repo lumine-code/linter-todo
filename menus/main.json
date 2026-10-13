@@ -8,9 +8,13 @@
           "submenu": [
             {
               "label": "Scan Project TODOs",
-              "command": "linter-todo:lint-projects"
+              "command": "linter-todo:lint-projects",
+              "group": "project",
+              "order": 30
             }
-          ]
+          ],
+          "group": "diagnostics",
+          "order": 10
         }
       ]
     },
