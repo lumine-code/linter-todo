@@ -9,7 +9,7 @@ const runtimeModules = ["lumine"];
 
 module.exports = [
   // Fixture files intentionally contain unused code for the specs to scan.
-  { ignores: ["spec/fixtures/**"] },
+  { ignores: ["spec/fixtures/**", "demo/**"] },
   js.configs.recommended,
   n.configs["flat/recommended-script"],
   {
