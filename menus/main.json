@@ -24,9 +24,9 @@
         {
           "label": "Linter Todo",
           "submenu": [
-            { "label": "Toggle State", "command": "linter-todo:toggle-state" },
-            { "label": "Lint Projects", "command": "linter-todo:lint-projects" },
-            { "label": "Lint Selected", "command": "linter-todo:lint-selected" }
+            { "label": "Toggle TODO Scanning", "command": "linter-todo:toggle-state" },
+            { "label": "Scan Project TODOs", "command": "linter-todo:lint-projects" },
+            { "label": "Scan TODOs in Tree Selection", "command": "linter-todo:lint-selected" }
           ]
         }
       ]
