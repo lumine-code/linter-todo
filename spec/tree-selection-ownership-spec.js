@@ -60,7 +60,10 @@ describe("TODO tree selection service ownership", () => {
 
   async function expectSelectedWorker(filePath) {
     const once = spyOn(Task, "once").and.callThrough();
-    await lumine.commands.dispatch(lumine.workspace.getElement(), "linter-todo:lint-selected");
+    const tree = document.createElement("div");
+    tree.className = "tree-view";
+    lumine.workspace.getElement().appendChild(tree);
+    await lumine.commands.dispatch(tree, "linter-todo:lint-selected");
     await conditionPromise(() => delegate.setAllMessages.calls.count() > 0);
     await conditionPromise(() => !indie.scanning);
     expect(once.calls.count()).toBe(1);

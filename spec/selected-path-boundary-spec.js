@@ -49,7 +49,10 @@ describe("TODO selected paths inside their actual project", () => {
     );
     const warnings = spyOn(lumine.notifications, "addWarning");
     const task = spyOn(Task, "once").and.callThrough();
-    lumine.commands.dispatch(lumine.workspace.getElement(), "linter-todo:lint-selected");
+    const tree = document.createElement("div");
+    tree.className = "tree-view";
+    lumine.workspace.getElement().appendChild(tree);
+    lumine.commands.dispatch(tree, "linter-todo:lint-selected");
     await flushMicrotasks();
     return { warnings, task };
   }

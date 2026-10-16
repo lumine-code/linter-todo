@@ -203,6 +203,17 @@ describe("linter-todo", () => {
   });
 
   describe("commands", () => {
+    it("requires tree focus for a selection scan while project scanning stays global", () => {
+      expect(lumine.commands.canDispatch(workspaceElement, "linter-todo:lint-projects")).toBe(true);
+      expect(lumine.commands.canDispatch(workspaceElement, "linter-todo:lint-selected")).toBe(
+        false,
+      );
+      const tree = document.createElement("div");
+      tree.className = "tree-view";
+      workspaceElement.appendChild(tree);
+      expect(lumine.commands.canDispatch(tree, "linter-todo:lint-selected")).toBe(true);
+    });
+
     it("toggles the linter state", () => {
       expect(lumine.config.get("linter-todo.state")).toBe(true);
       lumine.commands.dispatch(workspaceElement, "linter-todo:toggle-state");

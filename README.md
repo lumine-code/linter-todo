@@ -25,7 +25,10 @@ To install `linter-todo` search for it in the Install pane of the Lumine setting
 Commands available in `lumine-workspace`:
 
 - `linter-todo:toggle-state`: toggle config of linter state,
-- `linter-todo:lint-projects`: scan entire project for TODO keywords,
+- `linter-todo:lint-projects`: scan entire project for TODO keywords.
+
+Commands available in `.tree-view`:
+
 - `linter-todo:lint-selected`: scan selected tree-view files or folders for TODO keywords.
 
 ## Usage
