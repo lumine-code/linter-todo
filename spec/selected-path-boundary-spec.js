@@ -44,6 +44,7 @@ describe("TODO selected paths inside their actual project", () => {
     fs.writeFileSync(file, "// TODO: actual selected path\n");
     edges.push(
       lumine.packages.serviceHub.provide("tree-view.selection", "1.0.0", {
+        getSelectionSnapshot: () => ({ count: [file].length }),
         selectedPaths: () => [file],
       }),
     );

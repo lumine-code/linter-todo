@@ -203,7 +203,13 @@ describe("linter-todo", () => {
   });
 
   describe("commands", () => {
-    it("requires tree focus for a selection scan while project scanning stays global", () => {
+    it("requires tree focus and cached scan prerequisites while project scanning stays global", () => {
+      expect(lumine.commands.canDispatch(workspaceElement, "linter-todo:lint-projects")).toBe(
+        false,
+      );
+      spyOn(lumine.project, "getPaths").and.returnValue(["/project"]);
+      mainModule.consumeLinterRegistry(() => ({ dispose() {} }));
+      mainModule.consumeTreeViewSelection({ getSelectionSnapshot: () => ({ count: 1 }) });
       expect(lumine.commands.canDispatch(workspaceElement, "linter-todo:lint-projects")).toBe(true);
       expect(lumine.commands.canDispatch(workspaceElement, "linter-todo:lint-selected")).toBe(
         false,

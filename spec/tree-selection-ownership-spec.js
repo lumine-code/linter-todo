@@ -46,6 +46,7 @@ describe("TODO tree selection service ownership", () => {
 
   function provider(filePath) {
     return {
+      getSelectionSnapshot: () => ({ count: 1 }),
       selectedPaths: jasmine.createSpy("selected paths").and.returnValue([filePath]),
       destroy: jasmine.createSpy("borrowed provider destroy"),
       dispose: jasmine.createSpy("borrowed provider dispose"),
