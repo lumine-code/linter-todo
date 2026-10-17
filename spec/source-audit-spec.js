@@ -99,4 +99,64 @@ describe("TODO scan failure and keyword boundaries", () => {
     await expectAsync(scanning).toBeResolved();
     expect(indie.scanning).toBe(false);
   });
+
+  it("retires an outgoing project's pending crawl before it can start a scanner", async () => {
+    let finish;
+    spyOn(indie, "collectFiles").and.returnValue(new Promise((resolve) => (finish = resolve)));
+    const task = spyOn(require("lumine").Task, "once").and.returnValue({
+      on() {},
+      terminate() {},
+    });
+    const scanning = indie.runScan();
+    const nextDirectory = fs.mkdtempSync(path.join(directory, "next-project-"));
+    await lumine.project.setState([nextDirectory]);
+    finish([file]);
+    await scanning;
+    expect(task).not.toHaveBeenCalled();
+    expect(delegate.setAllMessages).not.toHaveBeenCalled();
+    expect(indie.scanning).toBe(false);
+  });
+
+  it("retires the outgoing scan before incoming storage is rebound ahead of roots", async () => {
+    let finish, reached, resume;
+    const rebound = new Promise((resolve) => (reached = resolve));
+    const held = new Promise((resolve) => (resume = resolve));
+    spyOn(indie, "collectFiles").and.returnValue(new Promise((resolve) => (finish = resolve)));
+    const task = spyOn(require("lumine").Task, "once").and.returnValue({ on() {}, terminate() {} });
+    const scanning = indie.runScan();
+    const switchProject = lumine.packages.storage.switchProject.bind(lumine.packages.storage);
+    spyOn(lumine.packages.storage, "switchProject").and.callFake(async (paths) => {
+      await switchProject(paths);
+      reached();
+      await held;
+    });
+    const nextDirectory = fs.mkdtempSync(path.join(directory, "rebound-project-"));
+    const transition = lumine.project.setState([nextDirectory]);
+    try {
+      await rebound;
+      expect(lumine.project.getPaths()).toEqual([directory]);
+      finish([file]);
+      await scanning;
+      expect(task).not.toHaveBeenCalled();
+      expect(delegate.setAllMessages).not.toHaveBeenCalled();
+      expect(indie.scanning).toBe(false);
+    } finally {
+      resume();
+      await transition;
+    }
+  });
+
+  it("retires a pending crawl when its registry delegate is replaced", async () => {
+    let finish;
+    spyOn(indie, "collectFiles").and.returnValue(new Promise((resolve) => (finish = resolve)));
+    const task = spyOn(require("lumine").Task, "once").and.returnValue({ on() {}, terminate() {} });
+    const scanning = indie.runScan();
+    const replacement = { setAllMessages: jasmine.createSpy("replacement results") };
+    indie.register(replacement, main);
+    finish([file]);
+    await scanning;
+    expect(task).not.toHaveBeenCalled();
+    expect(replacement.setAllMessages).not.toHaveBeenCalled();
+    expect(indie.scanning).toBe(false);
+  });
 });
