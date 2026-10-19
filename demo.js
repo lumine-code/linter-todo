@@ -1,7 +1,7 @@
 // Authentic package usage. Run with lumine/script/demo.js; fixtures stay in demo/.
 module.exports = {
   version: 1,
-  dependencies: ["language-javascript", "language-todo", "linter", "linter-panel"],
+  dependencies: ["language-javascript", "language-todo", "linter", "diagnostics"],
   viewport: { width: 1100, height: 530 },
   async before() {},
   async prepare(context) {
@@ -22,13 +22,13 @@ module.exports = {
           await new Promise((resolve) => setTimeout(resolve, 1600));
         }
         {
-          await lumine.workspace.open("lumine://linter-panel");
+          await lumine.workspace.open("lumine://diagnostics");
           lumine.workspace.getBottomDock().setState({ size: 190 });
           lumine.workspace.getBottomDock().show();
         }
       },
       ready() {
-        return Boolean(document.querySelector(".linter-panel")?.innerText.includes("TODO"));
+        return Boolean(document.querySelector(".diagnostics")?.innerText.includes("TODO"));
       },
     },
   ],
