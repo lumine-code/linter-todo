@@ -1,18 +1,18 @@
 {
   "title": "linter-todo",
   "description": "Collect TODO and FIXME annotations as navigable diagnostics.",
-  "recordedOn": "2026-10-14",
-  "sourceRevision": "8a46ab983b5c46418730cd5c920bc02d974658d9",
-  "themeSourceRevision": "7fbd047a87ecf1367c896b19ff270cdc28d319f7",
+  "recordedOn": "2026-10-19",
+  "sourceRevision": "8d0cecce7ac189470e08e8f81a31003e7107a473",
+  "themeSourceRevision": "1b8b1b57c87794d068b48e938fd81c9740a2e39d",
   "mode": "normal",
   "fontSettings": "default",
   "scenario": "demo.js",
-  "recipeHash": "d8a8f4db0e8891d452d280fdb8bff7c32005acd5400511b7c320b02641026daa",
+  "recipeHash": "e2d90d16188cb7295cd62782e9da2c0e57e4614991da3178ce07ae8bcf801e54",
   "environment": {
     "platform": "win32",
     "arch": "x64",
-    "electron": "44.7.0",
-    "chrome": "152.0.7977.130",
+    "electron": "44.9.0",
+    "chrome": "152.0.7977.167",
     "devicePixelRatio": 1,
     "locale": "en-GB",
     "fontFamily": "Fira Code, Menlo, DejaVu Sans Mono, Consolas, monospace",
@@ -21,44 +21,45 @@
   },
   "viewport": { "width": 1100, "height": 530 },
   "cornerRadius": 10,
+  "privacy": { "version": 1, "location": "neutral", "textChecked": true },
   "sources": {
     "editor": {
-      "revision": "8be8f86075ad93df038610d82b3ac6d99329957d",
+      "revision": "e13c8d8e990363ad18820418e75b5a757060f208",
       "dirty": true,
-      "workingTreeHash": "0a9458f6e3959fe7a52b2fec76abef27dcbaa9792f192b81ac1e3f6b2be82009"
+      "workingTreeHash": "20ee038740cf1086ce35ec1f650919f29db893fb0d5631c013187228202ff10d"
     },
     "package": {
-      "revision": "8a46ab983b5c46418730cd5c920bc02d974658d9",
+      "revision": "8d0cecce7ac189470e08e8f81a31003e7107a473",
       "dirty": false,
       "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "linter-todo": {
-      "revision": "8a46ab983b5c46418730cd5c920bc02d974658d9",
+      "revision": "8d0cecce7ac189470e08e8f81a31003e7107a473",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "diagnostics": {
+      "revision": "fe9dc55ce824699f1e79b31817c9c3c6f73ac22d",
       "dirty": false,
       "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "language-javascript": {
-      "revision": "ae2e6968e3a349fb4d09ce53e339a0f8cce903aa",
+      "revision": "721d40ef20e4ffda4125b375f50c908541fa7c08",
       "dirty": false,
       "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "language-todo": {
-      "revision": "b1ac621c2aad331a5185dc15a7a7d740d13250bb",
+      "revision": "bd705ae1992998daa16d63d89027fb91ed0ef552",
       "dirty": false,
       "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     "linter": {
-      "revision": "adec0e9d64ffe64f9e041df825324efc0795601b",
+      "revision": "c9584dda26a14a3859e40a153ab27018a7c6223c",
       "dirty": true,
-      "workingTreeHash": "bc72c0afefb416d396eb209e3ef758b6ef4cb17d5a24d3d4af95b1b4fbdb8e75"
-    },
-    "diagnostics": {
-      "revision": "52b4727794bf840757d2c6ec818329f954ecfb25",
-      "dirty": true,
-      "workingTreeHash": "2241dd689405cc52970f9f0be515276ed372a29e9bfa068e89f434bbcac245f6"
+      "workingTreeHash": "7504c71931391dc0b96debe734ad724efd3ce04dee0e94ed6c69f77eabf37a20"
     },
     "one-theme": {
-      "revision": "7fbd047a87ecf1367c896b19ff270cdc28d319f7",
+      "revision": "1b8b1b57c87794d068b48e938fd81c9740a2e39d",
       "dirty": false,
       "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     }
@@ -75,7 +76,7 @@
       "label": "Collect TODO and FIXME annotations as navigable diagnostics.",
       "width": 1100,
       "height": 530,
-      "sha256": "94e9c71e9924283da825c0c290ba71491bd725bb7f617217ae10ae40a73c1bd0"
+      "sha256": "e530596f3fc021d19a596bb9c470a584c9d11acf9a23ae159e03fd4b15a4ac17"
     }
   ]
 }
