@@ -6,6 +6,8 @@ const timers = require("node:timers");
 describe("TODO scan failure and keyword boundaries", () => {
   let main, indie, directory, file, leases, delegate;
   beforeEach(async () => {
+    const textGrammarPackage = await lumine.packages.activatePackage("language-text");
+    await textGrammarPackage.resourceLoadPromise;
     jasmine.useRealClock();
     for (const name of ["openPath", "openExternal", "openApplication", "showItemInFolder"])
       spyOn(lumine.shell, name).and.resolveTo();

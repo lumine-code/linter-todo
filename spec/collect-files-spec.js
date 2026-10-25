@@ -30,7 +30,9 @@ function relativize(dir, paths) {
 describe("linter-todo file collection", () => {
   let dir;
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    const textGrammarPackage = await lumine.packages.activatePackage("language-text");
+    await textGrammarPackage.resourceLoadPromise;
     dir = buildFixture();
     lumine.config.set("linter-todo.excludeVcsIgnoredPaths", true);
   });
@@ -86,6 +88,20 @@ describe("linter-todo file collection", () => {
     const target = path.join(dir, "build", "bundle.js");
 
     expect(await linter.collectFiles([target], [], null)).toEqual([target]);
+  });
+
+  it("skips an open file with None even when explicitly selected", async () => {
+    const filePath = path.join(dir, "index.js");
+    const editor = await lumine.workspace.open(filePath);
+    const grammar = editor.getGrammar();
+    try {
+      editor.setGrammar(lumine.grammars.nullGrammar);
+      expect(await linter.collectFiles([filePath], [], null)).toEqual([]);
+      editor.setGrammar(grammar);
+      expect(await linter.collectFiles([filePath], [], null)).toEqual([filePath]);
+    } finally {
+      editor.destroy();
+    }
   });
 
   it("ignores a target that cannot be read", async () => {

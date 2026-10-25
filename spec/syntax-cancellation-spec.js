@@ -3,7 +3,9 @@ const timers = require("node:timers");
 
 describe("TODO syntax request cancellation", () => {
   let execution;
-  beforeEach(() => {
+  beforeEach(async () => {
+    const textGrammarPackage = await lumine.packages.activatePackage("language-text");
+    await textGrammarPackage.resourceLoadPromise;
     execution = lumine.grammars.syntaxExecution;
     lumine.grammars.syntaxExecution = "worker";
   });
