@@ -104,6 +104,25 @@ describe("linter-todo file collection", () => {
     }
   });
 
+  it("skips a closed None association and honors an explicit real grammar", async () => {
+    const previous = lumine.config.get("core.customFileTypes");
+    const filePath = path.join(dir, "index.js");
+    let editor;
+    try {
+      lumine.config.set("core.customFileTypes", {
+        [lumine.grammars.nullGrammar.scopeName]: ["js"],
+      });
+      expect(await linter.collectFiles([filePath], [], null)).toEqual([]);
+      editor = await lumine.workspace.open(filePath);
+      lumine.grammars.assignGrammar(editor, lumine.grammars.grammarForScopeName("text.plain"));
+      expect(await linter.collectFiles([filePath], [], null)).toEqual([filePath]);
+    } finally {
+      editor?.destroy();
+      if (previous === undefined) lumine.config.unset("core.customFileTypes");
+      else lumine.config.set("core.customFileTypes", previous);
+    }
+  });
+
   it("ignores a target that cannot be read", async () => {
     expect(await linter.collectFiles([path.join(dir, "nope")], [], null)).toEqual([]);
   });
