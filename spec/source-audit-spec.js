@@ -102,6 +102,27 @@ describe("TODO scan failure and keyword boundaries", () => {
     expect(indie.scanning).toBe(false);
   });
 
+  it("stops its worker when a scanned file is added to the workspace already using None", async () => {
+    const task = { on() {}, terminate: jasmine.createSpy("terminate TODO scanner") };
+    const start = spyOn(require("lumine").Task, "once").and.returnValue(task);
+    const warning = spyOn(lumine.notifications, "addWarning");
+    await indie.runScan();
+    expect(start).toHaveBeenCalledTimes(1);
+    const editor = lumine.workspace.buildTextEditor();
+    editor.getBuffer().setPath(file);
+    lumine.grammars.assignGrammar(editor, lumine.grammars.nullGrammar);
+    try {
+      lumine.workspace.getActivePane().addItem(editor);
+      expect(task.terminate).toHaveBeenCalledTimes(1);
+      expect(indie.scanning).toBe(false);
+      start.calls.mostRecent().args.at(-1)();
+      expect(delegate.setAllMessages).not.toHaveBeenCalled();
+      expect(warning).not.toHaveBeenCalled();
+    } finally {
+      editor.destroy();
+    }
+  });
+
   it("retires an outgoing project's pending crawl before it can start a scanner", async () => {
     let finish;
     spyOn(indie, "collectFiles").and.returnValue(new Promise((resolve) => (finish = resolve)));
