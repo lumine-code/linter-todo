@@ -37,6 +37,10 @@ The following keywords are detected by default: `TODO`, `FIXME`, `CHANGED`, `XXX
 
 Both scan modes restrict matches to comment regions only.
 
+Scanning uses immutable source snapshots, bounded literal-search windows and an incremental comment cursor. Project workers decode files in chunks and return diagnostics without transferring source text; notebook code cells provide their snapshots directly. There is no whole-document string or per-row comment-map allocation. Edits and cancellation discard obsolete results.
+
+Diagnostic excerpts are previews, visibly elided after 1,024 UTF-16 units, with at most eight continuation rows. A scan exceeding 10,000 diagnostics fails explicitly instead of publishing a partial list. Keywords are single-line literals of at most 4,096 units each, with a 65,536-unit combined pattern budget checked before compilation.
+
 **Editor scan** uses hardcoded comment syntax for known file extensions, matching project scan behavior and avoiding tokenizer timing races when a file is first opened. Unknown extensions fall back to the tokenizer: a match is accepted only if its scope descriptor includes a `comment` scope or the file root is `text.plain`.
 
 **Project scan** uses hardcoded comment syntax per file extension, since no tokenizer is available for files not open in the editor. Single-line and block comment markers are defined for all built-in extensions. Plain text files (`.txt`) are accepted in full. Files with no known comment syntax (e.g. `.json`, `.md`) produce no matches. Supported extensions: `.c` `.cpp` `.h` `.hpp` `.cs` `.java` `.js` `.ts` `.jsx` `.tsx` `.vue` `.svelte` `.astro` `.html` `.css` `.scss` `.less` `.xml` `.py` `.ipy` `.rb` `.pl` `.pm` `.sh` `.bash` `.zsh` `.ps1` `.bat` `.cmd` `.go` `.rs` `.swift` `.kt` `.dart` `.scala` `.hs` `.ml` `.el` `.clj` `.ex` `.exs` `.erl` `.yaml` `.yml` `.toml` `.cfg` `.ini` `.conf` `.sql` `.lua` `.r` `.m` `.tex` `.vim` `.coffee` `.cson` `.dat` `.gra` `.grb` `.txt`.

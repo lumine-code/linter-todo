@@ -57,7 +57,7 @@ describe("linter-todo", () => {
       const messages = mainModule.provideLinter().lint(editor);
 
       expect(messages.length).toBe(2);
-      expect(editor.getBuffer().getLines).toHaveBeenCalledTimes(1);
+      expect(editor.getBuffer().getLines).not.toHaveBeenCalled();
 
       expect(messages[0].severity).toBe("hint");
       expect(messages[0].excerpt).toBe("TODO: implement feature");
@@ -83,7 +83,7 @@ describe("linter-todo", () => {
       expect(editor.getBuffer().getLines).not.toHaveBeenCalled();
     });
 
-    it("classifies CADINP matches using one comment map, including a first match in code", () => {
+    it("classifies CADINP matches incrementally, including a first match in code", () => {
       spyOn(editor, "getPath").and.returnValue(path.join(__dirname, "fixtures", "sample.dat"));
       editor.setText("TODO = 1\n$ TODO: mesh\n\n! FIXME: loads\n\n// NOTE: check\n");
       spyOn(editor.getBuffer(), "getLines").and.callThrough();
@@ -95,7 +95,7 @@ describe("linter-todo", () => {
         "FIXME: loads",
         "NOTE: check",
       ]);
-      expect(editor.getBuffer().getLines).toHaveBeenCalledTimes(1);
+      expect(editor.getBuffer().getLines).not.toHaveBeenCalled();
     });
 
     it("honors the configured keyword list", () => {
@@ -140,13 +140,13 @@ describe("linter-todo", () => {
       };
     }
 
-    it("scans the cells instead of the JSON projection", () => {
+    it("scans the cells instead of the JSON projection", async () => {
       const sourceEditor = fakeSourceEditor([
         { type: "markdown", source: "TODO in prose stays out of it" },
         { type: "code", source: "x = 1\n# TODO: fix the kernel\n" },
       ]);
 
-      const messages = mainModule.provideLinter().lint(sourceEditor);
+      const messages = await mainModule.provideLinter().lint(sourceEditor);
 
       expect(messages.length).toBe(1);
       expect(messages[0].excerpt).toBe("TODO: fix the kernel");
@@ -161,12 +161,12 @@ describe("linter-todo", () => {
       expect("buffer" in messages[0].location).toBe(false);
     });
 
-    it("requires the keyword to sit in a comment within the cell", () => {
+    it("requires the keyword to sit in a comment within the cell", async () => {
       const sourceEditor = fakeSourceEditor([{ type: "code", source: "TODO = 1\nprint(TODO)\n" }]);
-      expect(mainModule.provideLinter().lint(sourceEditor)).toEqual([]);
+      expect(await mainModule.provideLinter().lint(sourceEditor)).toEqual([]);
     });
 
-    it("reports nothing while no notebook view is attached", () => {
+    it("reports nothing while no notebook view is attached", async () => {
       const sourceEditor = {
         isJupyterNotebookSourceEditor: true,
         getJupyterNotebookEditors: () => [],
